@@ -9,6 +9,7 @@ import {
 import { FieldArray, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Add, Remove } from "@mui/icons-material";
+import axiosInstance from "../api/axiosInstance";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -48,7 +49,8 @@ const AddBookForm = () => {
           categories: [{ fullName: "" }],
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
+        onSubmit={async( values) => {
+            await axiosInstance.post("/books", values);
           console.log("📘 Book JSON:", values);
         }}
       >
